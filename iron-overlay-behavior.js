@@ -208,8 +208,11 @@ export const IronOverlayBehaviorImpl = {
   },
 
   detached: function() {
-    dom(this).unobserveNodes(this._observer);
-    this._observer = null;
+    if (this._observer) {
+      dom(this).unobserveNodes(this._observer);
+      this._observer = null;
+    }
+    
     for (var cb in this.__rafs) {
       if (this.__rafs[cb] !== null) {
         cancelAnimationFrame(this.__rafs[cb]);
